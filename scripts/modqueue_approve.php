@@ -97,7 +97,13 @@
 					{
 						// Delete item from moderation queue cache folder
 						if(file_exists("../moderationqueue/_cache/$modItem->filename")) { unlink("../moderationqueue/_cache/$modItem->filename"); }
-						
+
+						## Remove old thumb
+						$thumbfile = str_replace("boxart", "boxart/thumb", $filename);
+						if(file_exists("banners/$thumbfile")){
+							unlink("banners/$thumbfile");
+						}
+
 						echo "Success";
 					}
 				}
