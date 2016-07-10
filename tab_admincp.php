@@ -83,6 +83,7 @@ if ($loggedin = 1 && $adminuserlevel == 'ADMINISTRATOR')
 					<li<?php if($cptab == "moderationqueue"){ ?> class="active" <?php } ?>><a href="<?= $baseurl ?>/admincp/?cptab=moderationqueue&queuetype=frontboxart">Uploaded Images Moderation Queue</a><br /><a href="<?= $baseurl ?>/admincp/?cptab=moderationqueue" style="text-decoration: none;"><span style="padding: 3px 9px; font-weight: bold; background-color: orange; color: #444444; border: 1px soid #FFFFFF; border-radius: 5px;"><?= $modQueueCount ?></span></a></li>
 					<li<?php if($cptab == "reportedqueue"){ ?> class="active" <?php } ?>><a href="<?= $baseurl ?>/admincp/?cptab=reportedqueue&queuetype=frontboxart">Reported Images/Games Moderation Queue</a><br /><a href="<?= $baseurl ?>/admincp/?cptab=reportedqueue" style="text-decoration: none;"><span style="padding: 3px 9px; font-weight: bold; background-color: orange; color: #444444; border: 1px soid #FFFFFF; border-radius: 5px;"><?= $repQueueCount ?></span></a></li>
 					<li<?php if($cptab == "addplatform"){ ?> class="active" <?php } ?>><a href="<?= $baseurl ?>/admincp/?cptab=addplatform">Add New Platform</a></li>
+					<li<?php if($cptab == "addgenre"){ ?> class="active" <?php } ?>><a href="<?= $baseurl ?>/admincp/?cptab=addgenre">Add New Genre</a></li>
 					<li<?php if($cptab == "publishers"){ ?> class="active" <?php } ?>><a href="<?= $baseurl ?>/admincp/?cptab=pubdev">Manage Publishers &amp; Developers</a></li>
 					<li<?php if($cptab == "sendpm"){ ?> class="active" <?php } ?>><a href="<?= $baseurl ?>/admincp/?cptab=sendpm">Send PM</a></li>
 					<li<?php if($cptab == "platformalias"){ ?> class="active" <?php } ?>><a href="<?= $baseurl ?>/admincp/?cptab=platformalias">Generate Platform Alias's</a></li>
@@ -729,6 +730,46 @@ if ($loggedin = 1 && $adminuserlevel == 'ADMINISTRATOR')
 								</form>
 							<?php
 							break;
+							
+						case "addgenre":
+							?>
+								<h2>Add a Genre...</h2>
+
+								<p>&nbsp;</p>
+
+								<form method="post" action="<?= $baseurl; ?>/admincp/" enctype="multipart/form-data">
+									<p style="text-align: center;">&nbsp;To create a new genre, enter it's name below.</p>
+									<p style="text-align: center; font-weight: bold;">Genre Name:&nbsp;<input type="text" name="genreName" size="60" /><br />
+									<input type="hidden" name="function" value="Add Genre" />
+									<input type="submit" name="submit" value="Add New Genre" style="padding: 6px;" /></p>
+								</form>
+								
+								<p>&nbsp;</p>
+								<h2>Existing games genres<h2>
+								<p>&nbsp;</p>
+								
+								<table align="center" border="1" cellspacing="0" cellpadding="7" bgcolor="#888888">
+									<tr>
+										<th style="background-color: #333; color: #FFF;">Id</th>
+										<th style="background-color: #333; color: #FFF;">Genre</th>
+									</tr>
+
+								<?php
+								$pubdevQuery = mysql_query(" SELECT * FROM genres ORDER BY genre ASC");
+								while($pubdevResult = mysql_fetch_object($pubdevQuery))
+								{
+								?>
+									<tr>
+										<td><?= $pubdevResult->id ?></td>
+										<td><?= $pubdevResult->genre ?></td>
+									</tr>
+								<?php
+								}
+								?>
+								</table>
+							<?php
+							break;
+
 
 						case "pubdev":
 							?>
