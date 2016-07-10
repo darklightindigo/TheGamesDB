@@ -10,3 +10,13 @@ thegamesdb.sublime-workspace
 .idea/
 TheGamesDB.iml
 phpinfo.php
+TheGamesDB/*
+vendor/*
+dashboard/*
+xampp*
+vendor/autoload.php
+composer.lock
+bitnami.css
+applications.html
+img/*
+.gitignore
