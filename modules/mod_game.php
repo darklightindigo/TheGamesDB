@@ -348,6 +348,12 @@
 					## Store the seriesid for the XML updater
 					seriesupdate($id);
 
+					## Remove old thumb
+					$thumbfile = str_replace("boxart", "boxart/thumb", $filename);
+					if(file_exists("banners/$thumbfile")){
+						unlink("banners/$thumbfile");
+					}
+
 					$message .= "Box art sucessfully added.";
 				}
 				else
