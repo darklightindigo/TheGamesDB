@@ -193,7 +193,7 @@ function imageResize($filename, $cleanFilename, $target)
 	<?php endif; ?>
 	
 	<!-- Start View Mode Links -->
-	<div style="float: right;">
+	<div style="float: right; margin-right: 50px;">
 		<div style="width: 80px; text-align: center; float: right;">
 			<a href="<?= "$baseurl/browse/$stringPlatform/?searchview=table&function=$function&sortBy=$sortBy&limit=$limit&page=$page&updateview=yes" ?>"><img src="<?=$baseurl?>/images/common/icons/viewicons/table.png" alt="table"/></a>
 			<p style="margin-top: 2px;"><a href="<?= "$baseurl/browse/$stringPlatform/?searchview=table&function=$function&sortBy=$sortBy&limit=$limit&page=$page&updateview=yes" ?>" style="color: #dd4400">Table</a></p>
@@ -215,18 +215,58 @@ function imageResize($filename, $cleanFilename, $target)
 			<p style="margin-top: 2px;"><a href="<?= "$baseurl/browse/$stringPlatform/?searchview=listing&function=$function&sortBy=$sortBy&limit=$limit&page=$page&updateview=yes" ?>" style="color: #dd4400">Listing</a></p>
 		</div>
 		<div style="clear: both;"></div>
+<!-- Start Sort By -->
+	<form style="text-align: right; float: right; margin-right: 15px;" action="<?=  $baseurl ?>/browse/<?php if (isset($stringPlatform)) { echo "$stringPlatform/"; } ?>">
+		<p style="font-weight: bold;" class="">
+
+		<!-- Region Select Prototype		
+			Region: <select name="region" onchange="this.form.submit();">
+			<option selected="" value="r.ALL">ALL</option>
+			<option value="r.USA">United States</option>
+			<option value="r.JPN">Japan</option>
+			<option value="r.EUR">Europe</option>
+		</select>
+		-->
+
+		&nbsp;&nbsp;&nbsp;&nbsp;Sort By: <select name="sortBy" onchange="this.form.submit();">
+			<option <?php if($sortBy == "g.GameTitle"){ echo "selected"; } ?> value="g.GameTitle">Name</option>
+			<option <?php if($sortBy == "p.name"){ echo "selected"; } ?> value="p.name">Platform</option>
+			<option <?php if($sortBy == "g.Genre"){ echo "selected"; } ?> value="g.Genre">Genre</option>
+			<option <?php if($sortBy == "g.Rating"){ echo "selected"; } ?> value="g.Rating">Rating</option>
+		</select>
+		&nbsp;&nbsp;&nbsp;&nbsp;Show: <select name="limit" onchange="this.form.submit();">
+			<option <?php if($limit == 10){ echo "selected"; } ?> value="10">10 Rows</option>
+			<option <?php if($limit == 20){ echo "selected"; } ?> value="20">20 Rows</option>
+			<option <?php if($limit == 40){ echo "selected"; } ?> value="40">40 Rows</option>
+			<option <?php if($limit == 80){ echo "selected"; } ?> value="80">80 Rows</option>
+			<option <?php if($limit == 100){ echo "selected"; } ?> value="100">100 Rows</option>
+		</select>
+
+		<!-- Distribution and Release Prototypes
+		<br><br><b>
+		Distribution:
+			<input type="radio" name="releasemethod" value="PhysicalDigital" checked>Physical+Digital
+			<input type="radio" name="releasemethod" value="Physical">Physical Only
+			<input type="radio" name="releasemethod" value="Digital">Digital Only
+		<br><br>
+		Release Type: 
+			<input type="checkbox" name="releasetype" value="Official" checked>Licensed
+			<input type="checkbox" name="releasetype" value="Unofficial">Unlicensed
+			<input type="checkbox" name="releasetype" value="Homebrew">Homebrew
+			<input type="checkbox" name="releasetype" value="Hackmod">Hack/Mod</b>
+		-->
+		</p>
+		<input type="hidden" name="searchview" value="<?= $searchview; ?>" />
+	</form>
 	</div>
+	
 	<!-- End View Mode Links -->
 	
 	<!-- Start Browse By Platform -->
-	<div style="width: 500px; margin-bottom: 12px; float: left;">
-		<div id="platformsPanel" style="border: 1px solid #555; background-color: #232323; padding: 15px; color: #FFFFFF;">
+	<div style="width: 370px; float: left; margin-left: 64px;">
+		<div id="platformsPanel" style="color: #FFFFFF;">
 			<div style="width:450px; margin: auto;">
 
-				<h1 style="text-align: center;">
-					Browse Games
-				</h1>
-				<br/>
 				<form id="platformBrowseForm">
 					<select name="stringPlatform" id="platformMenu" onchange="if($('#platformMenu').val() != 'select') { document.location.href = '<?= $baseurl ?>/browse/' + this.value + '/?searchview=<?= $searchview; ?>'; }" style="color: #333; width: 450px !important;">
 						<option value="select" title="<?php echo $baseurl; ?>/images/common/icons/question-block_48.png">Please Select Platform...</option>
@@ -249,23 +289,7 @@ function imageResize($filename, $cleanFilename, $target)
 	</div>
 	<!-- End Browse By Platform -->
 		
-	<!-- Start Sort By -->
-	<form style="text-align: right; float: right;" action="<?=  $baseurl ?>/browse/<?php if (isset($stringPlatform)) { echo "$stringPlatform/"; } ?>">
-		<p style="font-weight: bold;">Sort By: <select name="sortBy" onchange="this.form.submit();">
-			<option <?php if($sortBy == "g.GameTitle"){ echo "selected"; } ?> value="g.GameTitle">Name</option>
-			<option <?php if($sortBy == "p.name"){ echo "selected"; } ?> value="p.name">Platform</option>
-			<option <?php if($sortBy == "g.Genre"){ echo "selected"; } ?> value="g.Genre">Genre</option>
-			<option <?php if($sortBy == "g.Rating"){ echo "selected"; } ?> value="g.Rating">Rating</option>
-		</select>
-		&nbsp;&nbsp;&nbsp;&nbsp;Show: <select name="limit" onchange="this.form.submit();">
-			<option <?php if($limit == 10){ echo "selected"; } ?> value="10">10 Rows</option>
-			<option <?php if($limit == 20){ echo "selected"; } ?> value="20">20 Rows</option>
-			<option <?php if($limit == 40){ echo "selected"; } ?> value="40">40 Rows</option>
-			<option <?php if($limit == 80){ echo "selected"; } ?> value="80">80 Rows</option>
-			<option <?php if($limit == 100){ echo "selected"; } ?> value="100">100 Rows</option>
-		</select></p>
-		<input type="hidden" name="searchview" value="<?= $searchview; ?>" />
-	</form>
+	
 	<!-- End Sort By -->
 	
 	<div style="clear: both;"></div>
