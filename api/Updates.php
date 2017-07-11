@@ -6,15 +6,14 @@
 ##
 ## Returns:
 ##   XML items for each series or episode that was updated since "time"
-
 ## Include functions, db connection, etc
 include("include.php");
 ?>
 <?php
 ## Prepare the search string
-$time		= $_REQUEST["time"];
-$type		= 'game';
-$actualtime	= time();
+$time = $_REQUEST["time"];
+$type = 'game';
+$actualtime = time();
 
 ## Time is a required field
 if ($time == "") {
@@ -28,7 +27,7 @@ if ($time == "") {
     print "<Time>$actualtime</Time>\n";
 }
 
-$time       = $actualtime - $time;
+$time = $actualtime - $time;
 
 $query = "SELECT id FROM games WHERE lastupdated>=$time LIMIT 1000";
 $result = mysql_query($query) or die('Query failed: ' . mysql_error());
@@ -36,5 +35,12 @@ while ($db = mysql_fetch_object($result)) {
     print "<Game>$db->id</Game>\n";
 }
 
+$query = "SELECT path FROM deletions WHERE timestamp_deleted>=$time AND path LIKE 'data/series/%' LIMIT 1000";
+$result = mysql_query($query) or die('Query failed: ' . mysql_error());
+while ($db = mysql_fetch_object($result)) {
+    $temp = explode("data/series/",$db->path);
+    $id = $temp[1];
+    print "<GameDeleted>$id</GameDeleted>\n";
+}
 ?>
 </Items>

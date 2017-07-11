@@ -166,4 +166,29 @@
 		}
 	}
 	
+	if (isset($function) && $function == 'Add Genre') {
+		if ($adminuserlevel == 'ADMINISTRATOR') {
+			## Check for exact matches for Genre name
+			$genreName = mysql_real_escape_string($genreName);
+			$genreName = ucfirst($genreName);
+			$query = " SELECT * FROM genres WHERE genre='$genreName' ";
+			$result = mysql_query($query) or die('Query failed: ' . mysql_error());
+
+			## Insert if it doesnt exist already
+			if (mysql_num_rows($result) == 0) {
+				$query = "INSERT INTO genres (genre) VALUES ('$genreName')";
+				$result = mysql_query($query) or die('Query failed: ' . mysql_error());
+				$id = mysql_insert_id();
+				
+			} else {
+				$errormessage = "Sorry, \"$genreName\" already exists in platforms.";
+			}
+			## Redirection
+				$URL = "$baseurl/admincp/?cptab=addgenre&errormessage=$errormessage";
+				header("Location: $URL");
+		}
+		else {
+			$errormessage = "You must be logged in as an admin to make that change.";
+		}
+	}
 ?>
